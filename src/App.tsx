@@ -2,10 +2,9 @@ import './App.css'
 import {Route, Routes} from "react-router-dom";
 import Layout from "./components/Layout/Layout.tsx";
 import Contacts from "./containers/Contacts/Contacts.tsx";
-import FullContactView from "./containers/FullContactView/FullContactView.tsx";
 import EditContact from "./containers/EditContact/EditContact.tsx";
 import NewContact from "./containers/NewContact/NewContact.tsx";
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 const App = () => {
 
@@ -24,8 +23,6 @@ const App = () => {
               path="/conatacts"
               element={(<Contacts />)}
             />
-            // params
-            <Route path='contacts/:id' element={<FullContactView/>}/>
             <Route path='/edit-contact/:id' element={<EditContact/>}/>
             <Route path="/new-contact" element={(<NewContact/>)}/>
             <Route path="*" element={(<h1>Not page found</h1>)}/>
