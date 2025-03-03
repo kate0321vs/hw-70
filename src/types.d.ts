@@ -1,9 +1,9 @@
 export interface Contact {
-    id: string;
     name: string;
     phone: string;
     email: string;
     photo: string;
+    id: string;
 }
 
 export interface ApiContact {
