@@ -1,6 +1,12 @@
 import { ApiContact, Contact } from '../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { createContact, fetchContacts, fetchOneContact, updateContact } from './ContactsThunk.ts';
+import {
+  createContact,
+  deleteContact,
+  fetchContacts,
+  fetchOneContact,
+  updateContact
+} from './ContactsThunk.ts';
 import { RootState } from '../app/store.ts';
 
 interface ContactsSlice {
@@ -10,6 +16,7 @@ interface ContactsSlice {
   createLoading: boolean;
   fetchOneLoading: boolean;
   updateLoading: boolean;
+  deleteLoading: boolean;
 }
 
 const initialState: ContactsSlice = {
@@ -19,6 +26,7 @@ const initialState: ContactsSlice = {
   createLoading: false,
   fetchOneLoading: false,
   updateLoading: false,
+  deleteLoading: false
 }
 
 const ContactsSlice = createSlice({
@@ -63,13 +71,23 @@ const ContactsSlice = createSlice({
     });
 
     builder.addCase(updateContact.pending, (state) => {
-      state.updateLoading = false
+      state.updateLoading = true
     });
     builder.addCase(updateContact.fulfilled, (state) => {
-      state.updateLoading = true
+      state.updateLoading = false
     });
     builder.addCase(updateContact.rejected, (state) => {
-      state.updateLoading = true
+      state.updateLoading = false
+    });
+
+    builder.addCase(deleteContact.pending, (state) => {
+      state.deleteLoading = true
+    });
+    builder.addCase(deleteContact.fulfilled, (state) => {
+      state.deleteLoading = false
+    });
+    builder.addCase(deleteContact.rejected, (state) => {
+      state.deleteLoading = false
     });
   }
 });
@@ -80,4 +98,5 @@ export const selectCreateLoading = (state: RootState) => state.contacts.createLo
 export const selectFetchOneLoading = (state: RootState) => state.contacts.fetchOneLoading;
 export const selectUpdateLoading = (state: RootState) => state.contacts.updateLoading;
 export const selectContact = (state: RootState) => state.contacts.contact;
+export const selectDeleteLoading = (state: RootState) => state.contacts.deleteLoading;
 export const contactsReducer = ContactsSlice.reducer;

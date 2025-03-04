@@ -45,3 +45,10 @@ export const fetchContacts = createAsyncThunk<Contact[], undefined>(
      await axiosApi.put(`/contacts/${id}.json`, contact);
    }
  );
+
+ export const deleteContact = createAsyncThunk(
+   'contacts/fetchDelete',
+     async (id: string) => {
+     await axiosApi.delete(`/contacts/${id}.json`);
+     }
+)

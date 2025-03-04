@@ -34,7 +34,7 @@ const ContactForm: React.FC<Props> = ({isEdit, isLoading, onSubmitFormToAddConta
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (form.name.trim().length === 0 && form.phone.trim().length === 0) {
+    if (form.name.trim().length === 0 || form.phone.trim().length === 0) {
       alert('Fill in the required fields!')
       return
     }
