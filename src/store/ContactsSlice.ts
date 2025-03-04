@@ -1,18 +1,24 @@
-import { Contact } from '../types';
+import { ApiContact, Contact } from '../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { createContact, fetchContacts } from './ContactsThunk.ts';
+import { createContact, fetchContacts, fetchOneContact, updateContact } from './ContactsThunk.ts';
 import { RootState } from '../app/store.ts';
 
 interface ContactsSlice {
   contacts: Contact[];
+  contact: ApiContact | null;
   fetchLoading: boolean;
   createLoading: boolean;
+  fetchOneLoading: boolean;
+  updateLoading: boolean;
 }
 
 const initialState: ContactsSlice = {
   contacts: [],
+  contact: null,
   fetchLoading: false,
   createLoading: false,
+  fetchOneLoading: false,
+  updateLoading: false,
 }
 
 const ContactsSlice = createSlice({
@@ -34,13 +40,36 @@ const ContactsSlice = createSlice({
     });
 
     builder.addCase(createContact.pending, (state) => {
-      state.createLoading = true
+      state.createLoading = true;
     });
     builder.addCase(createContact.fulfilled, (state) => {
-      state.createLoading = false
+      state.createLoading = false;
     });
     builder.addCase(createContact.rejected, (state) => {
-      state.createLoading = false
+      state.createLoading = false;
+    });
+
+    builder.addCase(fetchOneContact.pending, (state) => {
+      state.contact = null;
+      state.fetchOneLoading = true;
+    });
+    builder.addCase(fetchOneContact.fulfilled, (state, {payload: contact}) => {
+      state.fetchOneLoading = false;
+      state.contact = contact;
+    });
+    builder.addCase(fetchOneContact.rejected, (state) => {
+      state.contact = null;
+      state.fetchOneLoading = false;
+    });
+
+    builder.addCase(updateContact.pending, (state) => {
+      state.updateLoading = false
+    });
+    builder.addCase(updateContact.fulfilled, (state) => {
+      state.updateLoading = true
+    });
+    builder.addCase(updateContact.rejected, (state) => {
+      state.updateLoading = true
     });
   }
 });
@@ -48,4 +77,7 @@ const ContactsSlice = createSlice({
 export const selectContacts = (state: RootState) => state.contacts.contacts;
 export const selectFetchLoading = (state: RootState) => state.contacts.fetchLoading;
 export const selectCreateLoading = (state: RootState) => state.contacts.createLoading;
+export const selectFetchOneLoading = (state: RootState) => state.contacts.fetchOneLoading;
+export const selectUpdateLoading = (state: RootState) => state.contacts.updateLoading;
+export const selectContact = (state: RootState) => state.contacts.contact;
 export const contactsReducer = ContactsSlice.reducer;

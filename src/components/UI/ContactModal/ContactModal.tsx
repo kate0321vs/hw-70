@@ -1,11 +1,12 @@
 import { Avatar, Box, Button, IconButton, Modal, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { ApiContact } from '../../../types';
+import { Contact } from '../../../types';
+import { NavLink } from 'react-router-dom';
 
 interface ContactModalProps {
   open: boolean;
   onClose: () => void;
-  contact: ApiContact | null;
+  contact: Contact | null;
 }
 
 const ContactModal: React.FC<ContactModalProps> = ({ open, onClose, contact }) => {
@@ -44,7 +45,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ open, onClose, contact }) =
               <Typography color="primary">{contact.email}</Typography>
             </Box>
             <Box mt={3} display="flex" justifyContent="flex-end" gap={2}>
-              <Button variant="outlined">Edit</Button>
+              <NavLink to={`edit-contact/${contact.id}`}>Edit</NavLink>
               <Button variant="outlined" color="error">
                 Delete
               </Button>

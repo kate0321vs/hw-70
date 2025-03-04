@@ -20,7 +20,7 @@ const App = () => {
                 />)}
             />
             <Route
-              path="/conatacts"
+              path="/contacts"
               element={(<Contacts />)}
             />
             <Route path='/edit-contact/:id' element={<EditContact/>}/>

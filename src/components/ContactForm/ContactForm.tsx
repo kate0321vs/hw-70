@@ -1,5 +1,5 @@
 import { Button, Grid, TextField, Typography } from '@mui/material';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import ButtonSpinner from '../UI/Spinner/ButtonSpinner/ButtonSpinner.tsx';
 import { ApiContact } from '../../types';
 
@@ -7,6 +7,7 @@ interface Props {
   isEdit?: boolean;
   isLoading: boolean;
   onSubmitFormToAddContact: (contact: ApiContact) => void;
+  contact?: ApiContact | null;
 }
 
 const initialForm = {
@@ -16,7 +17,7 @@ const initialForm = {
   photo: '',
 }
 
-const ContactForm: React.FC<Props> = ({isEdit, isLoading, onSubmitFormToAddContact}) => {
+const ContactForm: React.FC<Props> = ({isEdit, isLoading, onSubmitFormToAddContact, contact}) => {
   const [form, setForm] = useState<ApiContact>(initialForm);
 
   let photoUrl = 'https://i.pinimg.com/736x/64/b2/ca/64b2ca20d03275743621149c0b69157b.jpg';
@@ -24,6 +25,12 @@ const ContactForm: React.FC<Props> = ({isEdit, isLoading, onSubmitFormToAddConta
   if (form.photo) {
     photoUrl = form.photo;
   }
+
+  useEffect(() => {
+    if (contact) {
+      setForm(contact);
+    }
+  }, [contact]);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
