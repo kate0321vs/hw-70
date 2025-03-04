@@ -45,7 +45,7 @@ const Contacts = () => {
   return (
     <>
       <Container sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        {contactsList}
+        {contacts.length > 0 ? contactsList : <p>No contacts yet</p>}
       </Container>
 
       <ContactModal contact={selectedContact} open={open} onClose={handleClose} />

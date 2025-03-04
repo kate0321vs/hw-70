@@ -2,6 +2,7 @@ import { Button, Grid, TextField, Typography } from '@mui/material';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import ButtonSpinner from '../UI/Spinner/ButtonSpinner/ButtonSpinner.tsx';
 import { ApiContact } from '../../types';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   isEdit?: boolean;
@@ -19,6 +20,7 @@ const initialForm = {
 
 const ContactForm: React.FC<Props> = ({isEdit, isLoading, onSubmitFormToAddContact, contact}) => {
   const [form, setForm] = useState<ApiContact>(initialForm);
+  const navigate = useNavigate();
 
   let photoUrl = 'https://i.pinimg.com/736x/64/b2/ca/64b2ca20d03275743621149c0b69157b.jpg';
 
@@ -48,6 +50,10 @@ const ContactForm: React.FC<Props> = ({isEdit, isLoading, onSubmitFormToAddConta
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     setForm({ ...form, [name]: value });
+  };
+
+  const onBack = () => {
+    navigate('/')
   }
 
   return (
@@ -100,6 +106,7 @@ const ContactForm: React.FC<Props> = ({isEdit, isLoading, onSubmitFormToAddConta
         </Grid>
 
         <Grid xs={12}>
+
           <TextField
             sx={{width: '100%', mb: 2}}
             label="Photo"
@@ -125,10 +132,20 @@ const ContactForm: React.FC<Props> = ({isEdit, isLoading, onSubmitFormToAddConta
           </Grid>
         </Grid>
 
-        <Grid xs={12}>
-          <Button sx={{width: '100%', mt: 2}} type="submit" variant="contained" disabled={isLoading}>
-            {isLoading ? <ButtonSpinner/> : (isEdit ? 'Edit' : 'Add')}
-          </Button>
+        <Grid container xs={12} sx={{ display: "flex", alignItems: "center", gap: '20px', mt: 3 }}>
+          {!isEdit && (
+            <Grid item xs="auto">
+              <Button sx={{ minWidth: 150, mt: 2 }} onClick={onBack} variant="contained" disabled={isLoading}>
+                Back to contacts
+              </Button>
+            </Grid>
+          )}
+
+          <Grid item xs="auto">
+            <Button sx={{ minWidth: 150, mt: 2 }} type="submit" variant="contained" disabled={isLoading}>
+              {isLoading ? <ButtonSpinner/> : (isEdit ? 'Edit' : 'Add')}
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </form>

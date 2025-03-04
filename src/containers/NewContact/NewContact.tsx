@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hook.ts';
 import { createContact } from '../../store/ContactsThunk.ts';
 import { ApiContact } from '../../types';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 
@@ -15,6 +16,7 @@ const NewContact = () => {
 
   const onSubmit = async (contact: ApiContact) => {
      await dispatch(createContact(contact));
+    toast.success('Contact was added Successfully!')
     navigate('/')
   }
 

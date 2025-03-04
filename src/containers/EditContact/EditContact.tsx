@@ -7,6 +7,7 @@ import { ApiContact } from '../../types';
 import { fetchOneContact, updateContact } from '../../store/ContactsThunk.ts';
 import { useEffect } from 'react';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
+import { toast } from 'react-toastify';
 
 const EditContact = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ const EditContact = () => {
   const onSubmit = async (contact: ApiContact) => {
     if (id) {
       await dispatch(updateContact({id, contact}));
+      toast.success('Contact was edited Successfully!')
       navigate('/');
     }
   }

@@ -15,7 +15,6 @@ export const fetchContacts = createAsyncThunk<Contact[], undefined>(
         return {...contacts[key], id: key};
       });
     }
-    console.log(newContacts)
     return newContacts.reverse()
   });
 
@@ -29,7 +28,6 @@ export const fetchContacts = createAsyncThunk<Contact[], undefined>(
  export const fetchOneContact = createAsyncThunk<ApiContact, string>(
    'contacts/fetchOne',
    async (id) => {
-     console.log(id)
      const contactResponse = await axiosApi<ApiContact | null>(`/contacts/${id}.json`);
      const contact = contactResponse.data;
      if (!contact) {

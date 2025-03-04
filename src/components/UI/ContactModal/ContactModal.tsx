@@ -6,6 +6,10 @@ import { useAppDispatch, useAppSelector } from '../../../app/hook.ts';
 import { deleteContact, fetchContacts } from '../../../store/ContactsThunk.ts';
 import { selectDeleteLoading } from '../../../store/ContactsSlice.ts';
 import ButtonSpinner from '../Spinner/ButtonSpinner/ButtonSpinner.tsx';
+import EmailIcon from '@mui/icons-material/Email';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import { toast } from 'react-toastify';
+
 
 interface ContactModalProps {
   open: boolean;
@@ -20,6 +24,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ open, onClose, contact }) =
   const onDelete = async () => {
       if (contact && window.confirm("Are you sure you want to delete this dish?")) {
         await dispatch(deleteContact(contact.id));
+        toast.success('Contact was deleted!')
         await dispatch(fetchContacts());
         onClose();
       }
@@ -54,10 +59,12 @@ const ContactModal: React.FC<ContactModalProps> = ({ open, onClose, contact }) =
               <Typography variant="h6" >{contact.name}</Typography>
             </Box>
             <Box mt={2} display="flex" alignItems="center" gap={1}>
-              <Typography color="primary">{contact.phone}</Typography>
+              <LocalPhoneIcon />
+              <Typography color="grey">{contact.phone}</Typography>
             </Box>
             <Box mt={1} display="flex" alignItems="center" gap={1}>
-              <Typography color="primary">{contact.email}</Typography>
+              <EmailIcon />
+              <Typography color="grey">{contact.email}</Typography>
             </Box>
             <Box mt={3} display="flex" justifyContent="flex-end" gap={2}>
               <NavLink className='editBtn' to={`edit-contact/${contact.id}`}>Edit</NavLink>
